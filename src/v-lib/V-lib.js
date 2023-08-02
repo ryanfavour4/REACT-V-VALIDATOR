@@ -63,6 +63,8 @@ Validator.prototype.validate = function (obj) {
         this.validateValueMinLength(objArr[1], objArr[0], rules.minLength);
       if (rules.toMatch !== undefined)
         this.validateValueToMatch(objArr[1], objArr[0], rules.toMatch);
+      if (rules.toNotMatch !== undefined)
+        this.validateValueToNotMatch(objArr[1], objArr[0], rules.toNotMatch);
       if (rules.regex)
         this.validateRegexValue(objArr[1], objArr[0], rules.regex);
       //? ====== BOOLEAN VALIDATORS ====?//
@@ -112,10 +114,18 @@ Validator.prototype.validateValueMinLength = function (value, name, rule) {
 
 Validator.prototype.validateValueToMatch = function (value, name, rule) {
   let validatorname = name || value;
-  if (value !== rule) {
+  if (JSON.stringify(value.trim()) !== JSON.stringify(rule.trim())) {
     this.errors.push(
       `${validatorname} VALLUE DOESNT MATCH ITS CORESSPONDING EXPECTED ${rule}`
     );
+    return;
+  }
+};
+
+Validator.prototype.validateValueToNotMatch = function (value, name, rule) {
+  let validatorname = name || value;
+  if (JSON.stringify(value.trim()) == JSON.stringify(rule.trim())) {
+    this.errors.push(`THE VALUE IN ${validatorname} SHOULD NOT BE ${rule}`);
     return;
   }
 };
