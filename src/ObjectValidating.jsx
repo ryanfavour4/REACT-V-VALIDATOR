@@ -15,7 +15,7 @@ const ObjectValidating = () => {
 
   V.rules = {
     firstName: { minLength: 3, regex: /^[A-Z].*$/ },
-    lastName: { toMatch: formData.firstName, maxLength: 19 },
+    lastName: { toNotMatch: formData.firstName, maxLength: 19 },
     number: {
       minLength: 9,
       maxLength: 15,
@@ -36,7 +36,8 @@ const ObjectValidating = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     V.validate(formData);
-    if (errors.length) alert(errors[0]);
+    if (errors.length) return alert(errors[0]);
+    console.log(formData);
   };
 
   return (
@@ -47,6 +48,7 @@ const ObjectValidating = () => {
           <label htmlFor="firstName">First Name:</label>
           <input
             type="text"
+            name="firstName"
             id="firstName"
             value={formData.firstName}
             onChange={handleChange}
@@ -57,6 +59,7 @@ const ObjectValidating = () => {
           <label htmlFor="lastName">Last Name:</label>
           <input
             type="text"
+            name="lastName"
             id="lastName"
             value={formData.lastName}
             onChange={handleChange}
@@ -67,6 +70,7 @@ const ObjectValidating = () => {
           <label htmlFor="email">Email:</label>
           <input
             type="email"
+            name="email"
             id="email"
             value={formData.email}
             onChange={handleChange}
@@ -77,6 +81,7 @@ const ObjectValidating = () => {
           <label htmlFor="number">Number:</label>
           <input
             type="tel"
+            name="number"
             id="number"
             value={formData.number}
             onChange={handleChange}
@@ -87,6 +92,7 @@ const ObjectValidating = () => {
           <label htmlFor="message">Message:</label>
           <textarea
             id="message"
+            name="message"
             value={formData.message}
             onChange={handleChange}
           ></textarea>
